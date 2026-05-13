@@ -7,6 +7,8 @@ class Book {
   String deskripsi;
   String? coverUrl;
   int stok;
+  int? sellerId;
+  String status;
 
   Book({
     this.id,
@@ -17,6 +19,8 @@ class Book {
     required this.deskripsi,
     this.coverUrl,
     this.stok = 0,
+    this.sellerId,
+    this.status = 'approved',
   });
 
   // Konversi dari Map (hasil query Cursor) ke objek Book
@@ -30,10 +34,11 @@ class Book {
       deskripsi: map['deskripsi'] ?? '',
       coverUrl: map['cover_url'],
       stok: map['stok'] ?? 0,
+      sellerId: map['seller_id'],
+      status: map['status'] ?? 'approved',
     );
   }
 
-  // Konversi dari objek Book ke Map (untuk Insert/Update)
   Map<String, dynamic> toMap() {
     return {
       'id': id,
@@ -44,10 +49,11 @@ class Book {
       'deskripsi': deskripsi,
       'cover_url': coverUrl,
       'stok': stok,
+      'seller_id': sellerId,
+      'status': status,
     };
   }
 
-  // Copy with untuk update sebagian field
   Book copyWith({
     int? id,
     String? judul,
@@ -57,6 +63,8 @@ class Book {
     String? deskripsi,
     String? coverUrl,
     int? stok,
+    int? sellerId,
+    String? status,
   }) {
     return Book(
       id: id ?? this.id,
@@ -67,6 +75,8 @@ class Book {
       deskripsi: deskripsi ?? this.deskripsi,
       coverUrl: coverUrl ?? this.coverUrl,
       stok: stok ?? this.stok,
+      sellerId: sellerId ?? this.sellerId,
+      status: status ?? this.status,
     );
   }
 

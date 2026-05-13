@@ -6,8 +6,9 @@ import 'book_form_screen.dart';
 class BookDetailScreen extends StatelessWidget {
   final Book book;
   final VoidCallback? onUpdate;
+  final bool showEdit;
 
-  const BookDetailScreen({super.key, required this.book, this.onUpdate});
+  const BookDetailScreen({super.key, required this.book, this.onUpdate, this.showEdit = true});
 
   @override
   Widget build(BuildContext context) {
@@ -67,21 +68,22 @@ class BookDetailScreen extends StatelessWidget {
               ),
             ),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.edit),
-                onPressed: () async {
-                  final result = await Navigator.push<bool>(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => BookFormScreen(book: book),
-                    ),
-                  );
-                  if (result == true) {
-                    onUpdate?.call();
-                    if (context.mounted) Navigator.pop(context);
-                  }
-                },
-              ),
+              if (showEdit)
+                IconButton(
+                  icon: const Icon(Icons.edit),
+                  onPressed: () async {
+                    final result = await Navigator.push<bool>(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => BookFormScreen(book: book),
+                      ),
+                    );
+                    if (result == true) {
+                      onUpdate?.call();
+                      if (context.mounted) Navigator.pop(context);
+                    }
+                  },
+                ),
             ],
           ),
 
